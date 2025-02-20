@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Work Logger Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-blue-600 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Design Work Logger Pro</h1>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showDashboard()" class="hover:bg-blue-700 px-4 py-2 rounded">Dashboard</button>
+                    <button onclick="showEntryForm()" class="hover:bg-blue-700 px-4 py-2 rounded">New Entry</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-4">
+            <!-- Dashboard View -->
+            <div id="dashboard" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Work Dashboard</h2>
+                    <div class="flex space-x-2">
+                        <button onclick="filterTasks('all')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">All</button>
+                        <button onclick="filterTasks('inProgress')" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">In Progress</button>
+                        <button onclick="filterTasks('pending')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Pending</button>
+                        <button onclick="filterTasks('completed')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Completed</button>
+                    </div>
+                </div>
+
+                <div id="taskList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Tasks will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Entry Form -->
+            <div id="entryForm" class="hidden bg-white p-6 rounded-lg custom-shadow max-w-2xl mx-auto">
+                <h2 class="text-xl font-semibold mb-6">New Work Entry</h2>
+                <form id="workEntryForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Work Type</label>
+                            <select id="workType" class="w-full border rounded p-2">
+                                <option value="print">Print HR + Layered Files</option>
+                                <option value="digital">Digital HR + Layered Files</option>
+                                <option value="retouching">Creative Retouching</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Team Lead</label>
+                            <input type="text" id="teamLead" class="w-full border rounded p-2" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Start Time</label>
+                            <input type="time" id="startTime" class="w-full border rounded p-2" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">End Time</label>
+                            <input type="time" id="endTime" class="w-full border rounded p-2" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Status</label>
+                            <select id="status" class="w-full border rounded p-2">
+                                <option value="inProgress">In Progress</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">QC Assigned To</label>
+                            <input type="text" id="qcPerson" class="w-full border rounded p-2" required>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">File Formats</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" name="fileFormat" value="jpg"> JPG
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" name="fileFormat" value="pdf"> PDF
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" name="fileFormat" value="ai"> Illustrator
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" name="fileFormat" value="psd"> Photoshop
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2" id="mockupSubmitted"> Mockup Submitted
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2" id="presentationProvided"> Presentation Provided
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" onclick="showDashboard()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function showDashboard() {
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('entryForm').classList.add('hidden');
+            renderTasks();
+        }
+
+        function showEntryForm() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('entryForm').classList.remove('hidden');
+        }
+
+        function renderTasks(filter = 'all') {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            
+            const filteredTasks = filter === 'all' 
+                ? tasks 
+                : tasks.filter(task => task.status === filter);
+
+            filteredTasks.forEach((task, index) => {
+                const taskElement = document.createElement('div');
+                taskElement.className = 'bg-white p-4 rounded-lg custom-shadow';
+                taskElement.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-semibold">${task.workType}</h3>
+                        <span class="px-2 py-1 rounded text-sm ${getStatusColor(task.status)}">${task.status}</span>
+                    </div>
+                    <div class="text-sm space-y-1">
+                        <p><strong>Team Lead:</strong> ${task.teamLead}</p>
+                        <p><strong>QC Person:</strong> ${task.qcPerson}</p>
+                        <p><strong>Time:</strong> ${task.startTime} - ${task.endTime}</p>
+                        <p><strong>Files:</strong> ${task.fileFormats.join(', ')}</p>
+                    </div>
+                    <div class="mt-2 flex justify-end">
+                        <button onclick="deleteTask(${index})" class="text-red-500 hover:text-red-700">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                `;
+                taskList.appendChild(taskElement);
+            });
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                inProgress: 'bg-yellow-100 text-yellow-800',
+                pending: 'bg-red-100 text-red-800',
+                completed: 'bg-green-100 text-green-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function filterTasks(status) {
+            renderTasks(status);
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
+        }
+
+        document.getElementById('workEntryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fileFormats = Array.from(document.getElementsByName('fileFormat'))
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            const newTask = {
+                workType: document.getElementById('workType').value,
+                teamLead: document.getElementById('teamLead').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                status: document.getElementById('status').value,
+                qcPerson: document.getElementById('qcPerson').value,
+                fileFormats: fileFormats,
+                mockupSubmitted: document.getElementById('mockupSubmitted').checked,
+                presentationProvided: document.getElementById('presentationProvided').checked,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            tasks.push(newTask);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            showDashboard();
+            this.reset();
+        });
+
+        // Initialize dashboard view
+        showDashboard();
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
